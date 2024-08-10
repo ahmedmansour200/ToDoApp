@@ -7,6 +7,8 @@ const Home = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [todos, setTodos] = useState([]);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+
   useEffect(() => {
     saveTodos(todos);
   }, [todos]);
@@ -44,6 +46,10 @@ const Home = () => {
   const removeTodo = (id) => {
     setTodos(todos.filter(todo => todo.id != id));
   }
+  const toggleDeleteMode = () => {
+    setIsDeleteMode(!isDeleteMode);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text
@@ -66,6 +72,12 @@ const Home = () => {
       <TouchableOpacity style={styles.submitBtn} onPress={addTodo}>
         <Text style={styles.text}>Add</Text>
       </TouchableOpacity>
+      <TouchableOpacity 
+        style={{ ...styles.submitBtn, backgroundColor: isDeleteMode ? 'red' : 'grey' }}
+        onPress={toggleDeleteMode}
+      >
+        <Text style={styles.text}>{isDeleteMode ? "Exit Delete Mode" : "Delete Mode"}</Text>
+      </TouchableOpacity>
       <View style={styles.dividerLine} />
       <View style={styles.filterContainer}>
         <TouchableOpacity
@@ -84,7 +96,7 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.todosContainer}>
-        <Todos todos={todos} removeTodo={removeTodo} />
+        <Todos todos={todos} removeTodo={removeTodo}  isDeleteMode={isDeleteMode} />
       </ScrollView>
     </SafeAreaView>
   );
