@@ -3,11 +3,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import StackRoute from "./src/shared/StackRoute";
 import CompletedTasks from "./src/Screens/CompletedTasks";
+import { Provider } from 'react-redux';
+import store from "./src/redux/store";
+
+
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Navigator
         screenOptions={{
@@ -28,5 +33,6 @@ export default function App() {
         <Screen name="Completed Task" component={CompletedTasks} />
       </Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
