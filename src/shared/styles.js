@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     paddingBottom: 20,
-    paddingTop: 20,
+    paddingTop: 8,
   },
   input: {
     borderWidth: 1,
@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
     fontSize: 15,
   },
   todosContainer: {
-    width: '90%',
+    width: '95%',
     marginTop: 20,
   },
   doneTodo: {

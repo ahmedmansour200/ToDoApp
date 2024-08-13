@@ -3,9 +3,19 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
-
-const TodoItem = ({ todo , removeTodo , id}) => {
+import {useDispatch} from 'react-redux'
+import { markAsDone, removeTodo } from "../redux/slices/todo.slice";
+import { styles } from "../shared/styles";
+const TodoItem = ({todo}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  
+  const todoDone = () => {
+    dispatch(markAsDone(todo.id));
+  }
+  const deleteTodo = () => {
+    dispatch(removeTodo(todo.id));
+  };
   return (
     <View
       activeOpacity={0.5}
@@ -22,12 +32,16 @@ const TodoItem = ({ todo , removeTodo , id}) => {
       }}
     > 
     <TouchableOpacity onPress={() => navigation.navigate("Todo-details", { todo })}>
-      <Text style={{ fontSize: 22, fontWeight: "bold" }}>{todo.title}</Text>
-      <Text>{todo.body}</Text>
+      <Text style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              ...(todo.completed ? styles.doneTodo : null),
+            }}>{todo.title}</Text>
+      <Text style={ todo.completed ? styles.doneTodo : null}>{todo.body}</Text>
     </TouchableOpacity>
     <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-    <AntDesign onPress={() => navigation.navigate("Completed Task", { todo })} name="checksquareo" size={20} color="green" />
-      <Feather onPress={() => removeTodo(id)} name="trash" size={20} color="red" />
+    <AntDesign onPress={todoDone} name="checksquareo" size={20} color="green" />
+      <Feather onPress={deleteTodo} name="trash" size={20} color="red" />
     </View>
     </View>
   );
